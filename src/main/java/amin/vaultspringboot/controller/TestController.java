@@ -66,6 +66,13 @@ public class TestController {
                 .encrypt(request.getSecretName(), request.getSecret());
     }
 
+    @PostMapping("/secret/decrypt")
+    public String decrypt(@RequestBody SecretRequest request) {
+        return vaultOperations
+                .opsForTransit()
+                .decrypt(request.getSecretName(), request.getSecret());
+    }
+
     @Data
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     private static class SecretRequest {
