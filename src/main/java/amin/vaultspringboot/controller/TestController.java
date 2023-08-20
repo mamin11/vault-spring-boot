@@ -55,7 +55,15 @@ public class TestController {
             secret = (String) readResponse.getData().get(request.getSecretName());
         }
 
-        return secret;
+        // return encrypted secret
+        return vaultOperations.opsForTransit().encrypt(request.getSecretName(), secret);
+    }
+
+    @PostMapping("/secret/encrypt")
+    public String encrypt(@RequestBody SecretRequest request) {
+        return vaultOperations
+                .opsForTransit()
+                .encrypt(request.getSecretName(), request.getSecret());
     }
 
     @Data
